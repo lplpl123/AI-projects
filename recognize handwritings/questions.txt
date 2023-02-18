@@ -1,0 +1,2 @@
+1. 如何查看mnist数据集的大小
+    使用 print(len(list(train_data))) 命令查看
