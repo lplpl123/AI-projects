@@ -1,4 +1,3 @@
-# 建立模型
 # 推理脚本
 import torch
 from torchvision import datasets, transforms
@@ -19,6 +18,7 @@ test_data = datasets.MNIST(root="./MNIST",
                            transform=transform,
                            download = False)
 train_loader = DataLoader(dataset=train_data, batch_size=10000, shuffle=True)
+test_loader = DataLoader(dataset=test_data, batch_size=5000, shuffle=True)
 
 
 # 训练模型脚本
@@ -26,7 +26,7 @@ cnn = CNN()
 loss_function = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(cnn.parameters(), lr=0.1)
 
-for epoch in range(100):
+for epoch in range(1):
     for images in train_loader:
         x = images[0]
         y_label = images[1]
@@ -37,5 +37,15 @@ for epoch in range(100):
         optimizer.step()
     print("完成第{}轮训练，loss为{}".format(epoch, loss))
 
+# 计算精度
+def test():
+    for images in test_loader:
+        x = images[0]
+        y_label = images[1]
+        y = cnn.forward(x)
+        print(y)
+        print(y.size())
+
+test()
 
 
