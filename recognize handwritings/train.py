@@ -26,26 +26,34 @@ cnn = CNN()
 loss_function = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(cnn.parameters(), lr=0.1)
 
-for epoch in range(1):
-    for images in train_loader:
-        x = images[0]
-        y_label = images[1]
-        y = cnn.forward(x)
-        loss = loss_function(y, y_label)
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-    print("完成第{}轮训练，loss为{}".format(epoch, loss))
+def train():
+    for epoch in range(1): # todo 临时调整训练参数
+        for images in train_loader:
+            x = images[0]
+            y_label = images[1]
+            y = cnn.forward(x)
+            loss = loss_function(y, y_label)
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+        print("完成第{}轮训练，loss为{}".format(epoch, loss))
 
 # 计算精度
 def test():
+    correct = 0
     for images in test_loader:
         x = images[0]
         y_label = images[1]
         y = cnn.forward(x)
-        print(y)
-        print(y.size())
+        pred = y.argmax(dim=1)
+        match_lst = pred.eq(y_label)
+        for ele in match_lst:
+            if ele == True:
+                correct += 1
+    accuracy = correct / 10000 # todo 广义化
+    print("accuracy: " + str(accuracy))
 
+train()
 test()
 
 
