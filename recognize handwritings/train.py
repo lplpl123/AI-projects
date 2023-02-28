@@ -54,6 +54,7 @@ def test():
     print("accuracy: " + str(accuracy))
 
 train()
+torch.save(cnn, "./models/cnn.pth")
 test()
 
 

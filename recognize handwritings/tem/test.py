@@ -1,9 +1,10 @@
-import torch
+from PIL import Image
+import numpy as np
 
-if __name__ == '__main__':
-    a = torch.tensor([[1, 2, 3],
-                      [4, 5, 6]])
-    b = a.max(dim=1)[0]
-    c = a.max(dim=1)[1]
-    d = a.argmax(dim=1)
-    print(d)
+
+img = Image.open('C:/Users/p30030010/Desktop/temp/kadilake.jpg').convert('L')
+img = img.resize((28, 28))
+data = np.array(img)
+data = data.reshape((1, 1, 28, 28))
+print(data.shape)
+print(data)
