@@ -17,5 +17,5 @@ if __name__ == '__main__':
     # 加载模型
     cnn = torch.load('./models/cnn.pth')
     # 进行推理
-    result = infer(data.item())
+    result = infer(data).item()
     print("图像类别是: ", result)
