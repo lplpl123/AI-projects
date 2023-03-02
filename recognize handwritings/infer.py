@@ -2,8 +2,9 @@ from PIL import Image
 import torch
 import numpy as np
 
-def infer(image_path):
-    y = cnn.forward()
+def infer(data):
+    y = cnn.forward(data)
+    result = y.argmax(dim=1)
     return result
 
 if __name__ == '__main__':
@@ -16,4 +17,5 @@ if __name__ == '__main__':
     # 加载模型
     cnn = torch.load('./models/cnn.pth')
     # 进行推理
-    result = infer(image_path)
+    result = infer(data.item())
+    print("图像类别是: ", result)
