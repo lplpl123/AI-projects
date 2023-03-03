@@ -55,6 +55,7 @@ def test():
 
 train()
 torch.save(cnn, "./models/cnn.pth")
+torch.save(cnn.state_dict(), './models/cnn.params')
 test()
 
 
