@@ -2,6 +2,7 @@ from PIL import Image
 import torch
 import numpy as np
 
+
 def infer(data):
     y = cnn.forward(data)
     result = y.argmax(dim=1)
