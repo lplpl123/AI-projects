@@ -4,6 +4,7 @@ from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 from model import CNN
 
+
 # 把读取到的图片转换为tensor
 transform = transforms.Compose([
     transforms.ToTensor()
@@ -55,6 +56,7 @@ def test():
 
 train()
 torch.save(cnn, "./models/cnn.pth")
+torch.save(cnn.state_dict(), './models/cnn.params')
 test()
 
 
