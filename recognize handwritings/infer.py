@@ -16,7 +16,7 @@ if __name__ == '__main__':
     data = np.array(img).reshape((1, 1, 28, 28))
     data = torch.Tensor(data)
     # 加载模型
-    cnn = torch.load('./models/cnn.pth')
+    cnn = torch.load('./saved_models/cnn.pth')
     # 进行推理
     result = infer(data).item()
     print("图像类别是: ", result)
