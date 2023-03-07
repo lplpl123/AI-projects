@@ -1,7 +1,3 @@
-from PIL import Image
-import numpy as np
-import torch
+import time
 
-
-X = torch.Tensor([1])
-print(X.item())
+print(time.asctime())

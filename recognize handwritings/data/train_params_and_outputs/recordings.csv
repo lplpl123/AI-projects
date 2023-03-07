@@ -1,0 +1,2 @@
+time,loss
+Tue Mar  7 15:56:04 2023,"tensor(2.2455, grad_fn=<NllLossBackward0>)"

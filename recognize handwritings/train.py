@@ -1,9 +1,11 @@
 # 推理脚本
+import time
+import csv
+import torch
+import params
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 from model import CNN
-import torch
-import params
 
 
 def train():
@@ -17,6 +19,7 @@ def train():
             loss.backward()
             optimizer.step()
         print("完成第{}轮训练，loss为{}".format(epoch, loss))
+    return loss
 
 # 计算精度
 def test():
@@ -33,6 +36,13 @@ def test():
     accuracy = correct / 10000 # todo 广义化
     print("accuracy: " + str(accuracy))
 
+# 记录训练结果和参数
+def record(train_loss):
+    write_lst = [time.ctime(), str(train_loss)]
+    with open('./data/train_params_and_outputs/recordings.csv', 'a', encoding='utf-8') as file:
+        writer = csv.writer(file)
+        writer.writerow(write_lst)
+
 
 if __name__ == '__main__':
 
@@ -41,11 +51,11 @@ if __name__ == '__main__':
         transforms.ToTensor()
     ])
     # 读取手写数据集, 总共有60000张图片
-    train_data = datasets.MNIST(root="./MNIST",
+    train_data = datasets.MNIST(root="./data/MNIST",
                                 train=True,
                                 transform=transform,
                                 download=False)
-    test_data = datasets.MNIST(root="./MNIST",
+    test_data = datasets.MNIST(root="./data/MNIST",
                                train=False,
                                transform=transform,
                                download=False)
@@ -56,7 +66,8 @@ if __name__ == '__main__':
     cnn = CNN()
     loss_function = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(cnn.parameters(), lr=0.1)
-    train()
+    train_loss = train()
+    record(train_loss)
     torch.save(cnn, "saved_models/cnn.pth")
     torch.save(cnn.state_dict(), 'saved_models/cnn.params')
     test()
