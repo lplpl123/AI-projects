@@ -8,6 +8,7 @@ from torch.utils.data import DataLoader
 from model import CNN
 
 
+# 训练
 def train():
     for epoch in range(params.EPOCHES[0]): # todo 临时调整训练参数
         for images in train_loader:
