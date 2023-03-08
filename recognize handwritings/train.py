@@ -2,15 +2,15 @@
 import time
 import csv
 import torch
-import params
+from config import params
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
-from model import CNN
+from models.model import CNN
 
 
-# 训练
+# train function: to train the parameters
 def train():
-    for epoch in range(params.EPOCHES[0]): # todo 临时调整训练参数
+    for epoch in range(params.EPOCHES):
         for images in train_loader:
             x = images[0]
             y_label = images[1]
@@ -22,9 +22,10 @@ def train():
         print("完成第{}轮训练，loss为{}".format(epoch, loss))
     return loss
 
-# 计算精度
+# test function: to calculate the accuracy and loss
 def test():
     correct = 0
+    count = 0
     for images in test_loader:
         x = images[0]
         y_label = images[1]
@@ -32,14 +33,17 @@ def test():
         pred = y.argmax(dim=1)
         match_lst = pred.eq(y_label)
         for ele in match_lst:
+            count += 1
             if ele == True:
                 correct += 1
-    accuracy = correct / 10000 # todo 广义化
+    accuracy = correct / count
     print("accuracy: " + str(accuracy))
 
 # 记录训练结果和参数
-def record(train_loss):
+def record(train_loss, *values):
     write_lst = [time.ctime(), str(train_loss)]
+    for ele in values:
+        write_lst.append(ele)
     with open('./data/train_params_and_outputs/recordings.csv', 'a', encoding='utf-8') as file:
         writer = csv.writer(file)
         writer.writerow(write_lst)
@@ -60,15 +64,15 @@ if __name__ == '__main__':
                                train=False,
                                transform=transform,
                                download=False)
-    train_loader = DataLoader(dataset=train_data, batch_size=10000, shuffle=True)
+    train_loader = DataLoader(dataset=train_data, batch_size=params.BATCH_SIZE, shuffle=True)
     test_loader = DataLoader(dataset=test_data, batch_size=5000, shuffle=True)
 
     # 训练模型脚本
     cnn = CNN()
     loss_function = torch.nn.CrossEntropyLoss()
-    optimizer = torch.optim.SGD(cnn.parameters(), lr=0.1)
+    optimizer = torch.optim.SGD(cnn.parameters(), lr=params.LEARNING_RATE)
     train_loss = train()
-    record(train_loss)
+    record(train_loss, params.EPOCHES, params.BATCH_SIZE)
     torch.save(cnn, "saved_models/cnn.pth")
     torch.save(cnn.state_dict(), 'saved_models/cnn.params')
     test()

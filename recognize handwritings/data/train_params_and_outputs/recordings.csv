@@ -1,2 +1,5 @@
 time,loss
 Tue Mar  7 15:56:04 2023,"tensor(2.2455, grad_fn=<NllLossBackward0>)"
+Wed Mar  8 11:12:15 2023,"tensor(1.8787, grad_fn=<NllLossBackward0>)",1,800
+Wed Mar  8 11:15:53 2023,"tensor(1.2343, grad_fn=<NllLossBackward0>)",1,800
+Wed Mar  8 11:35:59 2023,"tensor(0.4046, grad_fn=<NllLossBackward0>)",1,800
