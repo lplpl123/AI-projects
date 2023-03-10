@@ -25,19 +25,17 @@ def train():
 # test function: to calculate the accuracy and loss
 def test():
     correct = 0
-    count = 0
+    total = 0
     for images in test_loader:
         x = images[0]
         y_label = images[1]
         y = cnn.forward(x)
         pred = y.argmax(dim=1)
-        match_lst = pred.eq(y_label)
-        for ele in match_lst:
-            count += 1
-            if ele == True:
-                correct += 1
-    accuracy = correct / count
+        total += y_label.size(0)
+        correct += (pred == y_label).sum().item()
+    accuracy = correct / total
     print("accuracy: " + str(accuracy))
+    return accuracy
 
 # 记录训练结果和参数
 def record(train_loss, *values):
@@ -72,9 +70,9 @@ if __name__ == '__main__':
     loss_function = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(cnn.parameters(), lr=params.LEARNING_RATE)
     train_loss = train()
-    record(train_loss, params.EPOCHES, params.BATCH_SIZE)
+    accuracy = test()
+    record(train_loss, params.EPOCHES, params.BATCH_SIZE, accuracy)
     torch.save(cnn, "saved_models/cnn.pth")
     torch.save(cnn.state_dict(), 'saved_models/cnn.params')
-    test()
 
 

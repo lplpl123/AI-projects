@@ -1,5 +1,10 @@
-time,loss
-Tue Mar  7 15:56:04 2023,"tensor(2.2455, grad_fn=<NllLossBackward0>)"
-Wed Mar  8 11:12:15 2023,"tensor(1.8787, grad_fn=<NllLossBackward0>)",1,800
-Wed Mar  8 11:15:53 2023,"tensor(1.2343, grad_fn=<NllLossBackward0>)",1,800
-Wed Mar  8 11:35:59 2023,"tensor(0.4046, grad_fn=<NllLossBackward0>)",1,800
+time,loss,epoch,batch_size,accuracy
+Tue Mar  7 15:56:04 2023,"tensor(2.2455, grad_fn=<NllLossBackward0>)",,,
+Wed Mar  8 11:12:15 2023,"tensor(1.8787, grad_fn=<NllLossBackward0>)",1,800,
+,,,,
+Wed Mar  8 11:15:53 2023,"tensor(1.2343, grad_fn=<NllLossBackward0>)",1,800,
+,,,,
+Wed Mar  8 11:35:59 2023,"tensor(0.4046, grad_fn=<NllLossBackward0>)",1,800,
+,,,,
+Fri Mar 10 11:02:26 2023,"tensor(0.3728, grad_fn=<NllLossBackward0>)",1,800,
+Fri Mar 10 11:10:08 2023,"tensor(0.4103, grad_fn=<NllLossBackward0>)",1,800,0.883
