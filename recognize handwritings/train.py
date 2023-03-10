@@ -62,16 +62,20 @@ if __name__ == '__main__':
                                train=False,
                                transform=transform,
                                download=False)
-    train_loader = DataLoader(dataset=train_data, batch_size=params.BATCH_SIZE, shuffle=True)
-    test_loader = DataLoader(dataset=test_data, batch_size=5000, shuffle=True)
+    train_loader = DataLoader(dataset=train_data, batch_size=params.TRAIN_BATCH_SIZE, shuffle=True)
+    test_loader = DataLoader(dataset=test_data, batch_size=params.TEST_BATCH_SIZE, shuffle=True)
 
     # 训练模型脚本
     cnn = CNN()
     loss_function = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(cnn.parameters(), lr=params.LEARNING_RATE)
+    start_time = time.time()
     train_loss = train()
+    end_time = time.time()
+    # 模型评估
+    train_time = end_time - start_time
     accuracy = test()
-    record(train_loss, params.EPOCHES, params.BATCH_SIZE, accuracy)
+    record(train_loss, params.EPOCHES, params.TRAIN_BATCH_SIZE, accuracy, train_time)
     torch.save(cnn, "saved_models/cnn.pth")
     torch.save(cnn.state_dict(), 'saved_models/cnn.params')
 

@@ -1,6 +1,6 @@
-from PIL import Image
 import torch
 import numpy as np
+from PIL import Image
 
 
 def infer(data):
