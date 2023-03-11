@@ -95,4 +95,5 @@ infer还得先处理数据
 accuracy应该达到什么程度才算比较好
 还是要比较train和test的loss和accuracy的
 做一些计算训练时间的这个机制，直接在main里面写就好了
-AI 99 69 80 92
+train文件太大了，可以再划分小一点
+AI 99 69 80 91
