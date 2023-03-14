@@ -39,7 +39,7 @@ def test():
 
 # 记录训练结果和参数
 def record(train_loss, *values):
-    write_lst = [time.ctime(), str(train_loss)]
+    write_lst = [time.ctime(), str(train_loss.item())]
     for ele in values:
         write_lst.append(ele)
     with open('./data/train_params_and_outputs/recordings.csv', 'a', encoding='utf-8') as file:
@@ -51,7 +51,8 @@ if __name__ == '__main__':
 
     # 把读取到的图片转换为tensor
     transform = transforms.Compose([
-        transforms.ToTensor()
+        transforms.ToTensor(),
+        transforms.Normalize(0, 1)
     ])
     # 读取手写数据集, 总共有60000张图片
     train_data = datasets.MNIST(root="./data/MNIST",
