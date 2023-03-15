@@ -49,10 +49,11 @@ def record(train_loss, *values):
 
 if __name__ == '__main__':
 
+    # 读取数据集的mean和std
     # 把读取到的图片转换为tensor
     transform = transforms.Compose([
         transforms.ToTensor(),
-        transforms.Normalize(0, 1)
+        transforms.Normalize(params.TOL_MEAN, params.TOL_STD)
     ])
     # 读取手写数据集, 总共有60000张图片
     train_data = datasets.MNIST(root="./data/MNIST",
